@@ -16,6 +16,8 @@
 		6379D6492C90F64E009CC639 /* SimpleTodoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379D6482C90F64E009CC639 /* SimpleTodoTests.swift */; };
 		6379D6532C90F64E009CC639 /* SimpleTodoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379D6522C90F64E009CC639 /* SimpleTodoUITests.swift */; };
 		6379D6552C90F64E009CC639 /* SimpleTodoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379D6542C90F64E009CC639 /* SimpleTodoUITestsLaunchTests.swift */; };
+		6379D6622C90F657009CC639 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379D6612C90F657009CC639 /* TaskView.swift */; };
+		639B19482C91AE0A0035918A /* AddTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639B19472C91AE0A0035918A /* AddTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		6379D64E2C90F64E009CC639 /* SimpleTodoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleTodoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6379D6522C90F64E009CC639 /* SimpleTodoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTodoUITests.swift; sourceTree = "<group>"; };
 		6379D6542C90F64E009CC639 /* SimpleTodoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTodoUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6379D6612C90F657009CC639 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
+		639B19472C91AE0A0035918A /* AddTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTask.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,8 @@
 				6379D63B2C90F64D009CC639 /* Persistence.swift */,
 				6379D63D2C90F64D009CC639 /* SimpleTodo.xcdatamodeld */,
 				6379D6382C90F64D009CC639 /* Preview Content */,
+				6379D6612C90F657009CC639 /* TaskView.swift */,
+				639B19472C91AE0A0035918A /* AddTask.swift */,
 			);
 			path = SimpleTodo;
 			sourceTree = "<group>";
@@ -265,7 +271,9 @@
 			files = (
 				6379D63C2C90F64D009CC639 /* Persistence.swift in Sources */,
 				6379D6352C90F64D009CC639 /* ContentView.swift in Sources */,
+				639B19482C91AE0A0035918A /* AddTask.swift in Sources */,
 				6379D6332C90F64D009CC639 /* SimpleTodoApp.swift in Sources */,
+				6379D6622C90F657009CC639 /* TaskView.swift in Sources */,
 				6379D63F2C90F64D009CC639 /* SimpleTodo.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
