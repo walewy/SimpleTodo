@@ -16,13 +16,9 @@ struct AddTask: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-    
     var body: some View {
         VStack {
+            // Верхний заголовок
             Text("Add new task")
                 .font(.title)
                 .fontWeight(.semibold)
@@ -30,6 +26,7 @@ struct AddTask: View {
             Spacer()
             
             VStack(spacing: 10) {
+                // Вьюшка ввода текста имени задачи
                 TextField(text: $taskName) {
                     Text("Enter title: ")
                         .font(.headline)
@@ -40,6 +37,8 @@ struct AddTask: View {
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.black, lineWidth: 2)
                 }
+                
+                // Вьюшка ввода текста описания задачи
                 TextField(text: $taskOverview) {
                     Text("Enter description: ")
                         .font(.headline)
@@ -51,6 +50,7 @@ struct AddTask: View {
                         .stroke(Color.black, lineWidth: 2)
                 }
                 
+                // Кнопка создания новой задачи
                 Button(action: {
                     DispatchQueue.global(qos: .utility).async {
                         let newItem = Item(context: viewContext)
@@ -58,6 +58,7 @@ struct AddTask: View {
                         newItem.name = self.taskName
                         newItem.overview = self.taskOverview
                         newItem.completed = false
+                        
                         
                         DispatchQueue.main.async {
                             do {
@@ -76,7 +77,7 @@ struct AddTask: View {
                         .bold()
                         .foregroundColor(.black)
                         .padding(.horizontal, 50)
-                        .padding(.vertical, 15)
+                        .padding(.vertical, 10)
                         .overlay {
                             RoundedRectangle(cornerRadius: 20)
                                 .stroke(Color.black, lineWidth: 2)
