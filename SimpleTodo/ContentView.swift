@@ -88,13 +88,6 @@ struct ContentView: View {
                 
             }
         }
-        .onAppear {
-            
-            
-        }
-        
-        
-        
     }
     
     func returnCount(open: Bool) -> Int {
@@ -123,7 +116,7 @@ struct ContentView: View {
         
         var body: some View {
             ZStack {
-                NavigationLink(destination: EditTask(item: item,name: item.name ?? "some name", overview: item.overview ?? "some overview")) {
+                NavigationLink(destination: EditTask(item: item, name: item.name ?? "some name", overview: item.overview ?? "some overview")) {
                     EmptyView() // Невидимый элемент для навигации
                 }
                 .opacity(0) // Прячем стрелку и сам `NavigationLink`, но сохраняем логику навигации

@@ -11,12 +11,11 @@ import SwiftUI
 struct EditTask: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.dismiss) private var dismiss
     
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
+//    @FetchRequest(
+//        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+//        animation: .default)
+//    private var items: FetchedResults<Item>
     
     @State var item: Item
     @State var name: String
@@ -59,7 +58,3 @@ struct EditTask: View {
         }
     }
 }
-
-//#Preview {
-//    EditTask(name: "some name", overview: "some overview")
-//}
