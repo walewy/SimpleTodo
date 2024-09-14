@@ -18,6 +18,10 @@
 		6379D6552C90F64E009CC639 /* SimpleTodoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379D6542C90F64E009CC639 /* SimpleTodoUITestsLaunchTests.swift */; };
 		6379D6622C90F657009CC639 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6379D6612C90F657009CC639 /* TaskView.swift */; };
 		639B19482C91AE0A0035918A /* AddTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639B19472C91AE0A0035918A /* AddTask.swift */; };
+		63E1DE062C93F5AC00634347 /* EditTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1DE052C93F5AC00634347 /* EditTask.swift */; };
+		63E1DE082C93FC3D00634347 /* FocusField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1DE072C93FC3D00634347 /* FocusField.swift */; };
+		63E1DE0A2C94ED4D00634347 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1DE092C94ED4D00634347 /* NetworkManager.swift */; };
+		63E1DE0C2C94ED9300634347 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1DE0B2C94ED9300634347 /* Task.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +56,10 @@
 		6379D6542C90F64E009CC639 /* SimpleTodoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTodoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		6379D6612C90F657009CC639 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		639B19472C91AE0A0035918A /* AddTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTask.swift; sourceTree = "<group>"; };
+		63E1DE052C93F5AC00634347 /* EditTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTask.swift; sourceTree = "<group>"; };
+		63E1DE072C93FC3D00634347 /* FocusField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusField.swift; sourceTree = "<group>"; };
+		63E1DE092C94ED4D00634347 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		63E1DE0B2C94ED9300634347 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +118,10 @@
 				6379D6382C90F64D009CC639 /* Preview Content */,
 				6379D6612C90F657009CC639 /* TaskView.swift */,
 				639B19472C91AE0A0035918A /* AddTask.swift */,
+				63E1DE052C93F5AC00634347 /* EditTask.swift */,
+				63E1DE072C93FC3D00634347 /* FocusField.swift */,
+				63E1DE092C94ED4D00634347 /* NetworkManager.swift */,
+				63E1DE0B2C94ED9300634347 /* Task.swift */,
 			);
 			path = SimpleTodo;
 			sourceTree = "<group>";
@@ -269,12 +281,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63E1DE0A2C94ED4D00634347 /* NetworkManager.swift in Sources */,
 				6379D63C2C90F64D009CC639 /* Persistence.swift in Sources */,
+				63E1DE0C2C94ED9300634347 /* Task.swift in Sources */,
 				6379D6352C90F64D009CC639 /* ContentView.swift in Sources */,
 				639B19482C91AE0A0035918A /* AddTask.swift in Sources */,
+				63E1DE062C93F5AC00634347 /* EditTask.swift in Sources */,
 				6379D6332C90F64D009CC639 /* SimpleTodoApp.swift in Sources */,
 				6379D6622C90F657009CC639 /* TaskView.swift in Sources */,
 				6379D63F2C90F64D009CC639 /* SimpleTodo.xcdatamodeld in Sources */,
+				63E1DE082C93FC3D00634347 /* FocusField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
