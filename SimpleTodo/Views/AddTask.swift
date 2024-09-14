@@ -68,9 +68,8 @@ struct AddTask: View {
                                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
                             }
                         }
-                        
-                        dismiss()
                     }
+                    dismiss()
                 }, label: {
                     Text("Add")
                         .font(.title)

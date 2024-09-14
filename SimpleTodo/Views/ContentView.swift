@@ -9,17 +9,29 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    
+    enum ActiveFilter {
+        case all
+        case open
+        case closed
+    }
+    
+    // объект NetworkManager
     @StateObject var networkManager = NetworkManager.shared
     
+    // контекст
     @Environment(\.managedObjectContext) private var viewContext
     
+    // получаем элементы из CoreData
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.name, ascending: true)],
         animation: .default)
     
     private var items: FetchedResults<Item>
     
-    @State private var activeFilter: String = "All"
+    // текущий фильтр
+//    @State private var activeFilter: String = "All"
+    @State private var activeFilter: ActiveFilter = .all
     
     var body: some View {
         NavigationView {
@@ -56,26 +68,30 @@ struct ContentView: View {
                 .padding()
                 
                 HStack() {
-                    FilterButton(label: "All", count: items.count, isActive: activeFilter == "All") {
-                        activeFilter = "All"
+                    FilterButton(label: "All", count: items.count, isActive: activeFilter == .all) {
+                        activeFilter = .all
                     }
-                    FilterButton(label: "Open", count: returnCount(open: true), isActive: activeFilter == "Open") {
-                        activeFilter = "Open"
+                    FilterButton(label: "Open", count: returnCount(open: true), isActive: activeFilter == .open) {
+                        activeFilter = .open
                     }
-                    FilterButton(label: "Closed", count: returnCount(open: false), isActive: activeFilter == "Closed") {
-                        activeFilter = "Closed"
+                    FilterButton(label: "Closed", count: returnCount(open: false), isActive: activeFilter == .closed) {
+                        activeFilter = .closed
                     }
                 }
                 
+                // Список задач
                 List {
                     ForEach(items) { item in
-                        if activeFilter == "All" {
+                        // Если выбран пункт "All", то берем все элементы из списка
+                        if activeFilter == .all {
                             ListElement(item: item)
-                        } else if activeFilter == "Open" {
+                            // Если выбран фильтр "Open", то отбираем элементы, у которых completed = false
+                        } else if activeFilter == .open {
                             if !item.completed {
                                 ListElement(item: item)
                             }
-                        } else if activeFilter == "Completed" {
+                            // Если выбран фильтр "Closed", то отбираем элементы, у которых completed = true
+                        } else if activeFilter == .closed {
                             if item.completed {
                                 ListElement(item: item)
                             }
@@ -90,6 +106,7 @@ struct ContentView: View {
         }
     }
     
+    // функция возвращающая количество элементов (Open, Closed)
     func returnCount(open: Bool) -> Int {
         
         var count = 0
@@ -124,11 +141,14 @@ struct ContentView: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
-                            VStack(alignment: .leading){
+                            // Вертикальный стэк с заголовком и описанием
+                            VStack(alignment: .leading) {
+                                // заголовок
                                 Text(item.name ?? "some name")
                                     .strikethrough(item.completed ? true : false, color: .black)
                                     .font(.headline)
                                 
+                                // описание
                                 Text(item.overview ?? "some overview")
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
@@ -136,20 +156,28 @@ struct ContentView: View {
                             
                             Spacer()
                             
+                            // Картинка по нажатию которой отмечается выполнение или не выполнение задачи
                             Image(systemName: item.completed ? "checkmark.circle.fill" : "circle")
                                 .foregroundColor(.blue)
                                 .font(.title)
+                                // по нажатию меняем completed и сохраняем контекст
                                 .onTapGesture {
                                     item.completed.toggle()
-                                    do {
-                                        try viewContext.save()
-                                    } catch {
-                                        print("Problems with context saving")
+                                    // переходим в основной поток
+                                    DispatchQueue.main.async {
+                                        do {
+                                            // пытаемся сохранить контекст
+                                            try viewContext.save()
+                                        } catch {
+                                            print("Problems with context saving")
+                                        }
                                     }
                                 }
                         }
-                        Divider() // Полоса разделения
                         
+                        Divider()
+                        
+                        // Отображаем время создания задачи
                         Text(item.timeCreate?.formatted(Date.FormatStyle().day(.twoDigits).weekday(.wide).month(.wide)) ?? "123")
                             .font(.caption)
                             .foregroundColor(.gray)
