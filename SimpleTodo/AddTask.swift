@@ -52,20 +52,24 @@ struct AddTask: View {
                 }
                 
                 Button(action: {
-                    let newItem = Item(context: viewContext)
-                    newItem.timeCreate = Date()
-                    newItem.name = self.taskName
-                    newItem.overview = self.taskOverview
-                    newItem.completed = false
-                    
-                    do {
-                        try viewContext.save()
-                    } catch {
-                        let nsError = error as NSError
-                        fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                    DispatchQueue.global(qos: .utility).async {
+                        let newItem = Item(context: viewContext)
+                        newItem.timeCreate = Date()
+                        newItem.name = self.taskName
+                        newItem.overview = self.taskOverview
+                        newItem.completed = false
+                        
+                        DispatchQueue.main.async {
+                            do {
+                                try viewContext.save()
+                            } catch {
+                                let nsError = error as NSError
+                                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                            }
+                        }
+                        
+                        dismiss()
                     }
-//                    print(items)
-                    dismiss()
                 }, label: {
                     Text("Add")
                         .font(.title)

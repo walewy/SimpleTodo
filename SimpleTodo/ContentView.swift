@@ -35,7 +35,7 @@ struct ContentView: View {
                             .foregroundColor(.gray)
                     }
                     .onAppear {
-                        networkManager.fetchTasks(viewContext: self.viewContext)
+                        networkManager.fetchTasks()
                     }
                     
                     Spacer()

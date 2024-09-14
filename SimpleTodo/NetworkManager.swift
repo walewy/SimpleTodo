@@ -17,67 +17,78 @@ final class NetworkManager: ObservableObject {
     
     static let shared = NetworkManager()
     
-    @Environment(\.dismiss) private var dismiss
-    
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-    
-    @Published var tasks = [Task]()
-    
+    // Говорит первый это запуск приложения или нет
     private var isFirstLaunch: Bool = false
     
-    func fetchTasks(viewContext: NSManagedObjectContext) {
-        if isFirstLaunch {
-            guard let url = URL(string: "https://dummyjson.com/todos") else { return }
-            let fetchRequest = URLRequest(url: url)
-            
-            URLSession.shared.dataTask(with: fetchRequest) { [weak self] (data, response, error) -> Void in
-                if error != nil {
-                    
-                } else {
-                    guard let safeData = data else { return }
-                    
-                    if let decodedQuery = try? JSONDecoder().decode(Query.self, from: safeData) {
-                        DispatchQueue.main.async {
-                            self?.tasks = decodedQuery.todos
+    // Контекст
+    private var viewContext = PersistenceController.shared.container.viewContext
+    
+    // Функция, которая загружает с json'a задания и сразу сгружает их в CoreData
+    func fetchTasks() {
+        // Если первый запуск то загружаем задания из сети и сгружаем в CoreData
+        if self.isFirstLaunch {
+            // Переходим в асинхронную очередь с качеством .utility
+            DispatchQueue.global(qos: .utility).async {
+                // Создаем ссылку url на json
+                guard let url = URL(string: "https://dummyjson.com/todos") else { return }
+                // Создаем запрос на url
+                let fetchRequest = URLRequest(url: url)
+                
+                // Создаем url sesson в котором обрабатываем запрос
+                URLSession.shared.dataTask(with: fetchRequest) { [weak self] (data, response, error) -> Void in
+                    // Если ошибки нет то мы продолжаем
+                    if error != nil {
+                        
+                    } else {
+                        // Избавляемся от опциональности
+                        guard let safeData = data else { return }
+                        
+                        // Декодируем полученные данные в переменную decodedQuery, которая имеет тип Query и сразу избавляемся от опциональности
+                        if let decodedQuery = try? JSONDecoder().decode(Query.self, from: safeData) {
+                            
+                            // Создаем очередь в главном потоке
                             DispatchQueue.main.async {
+                                
+                                // Проходимся фором по заданиям из полученного ответа
                                 for task in decodedQuery.todos {
-                                    let newItem = Item(context: viewContext)
+                                    // Создаем новый айтем в CoreData
+                                    let newItem = Item(context: self!.viewContext)
+                                    //Присаваиваем итему все нужные нам параметры(или это атрибутом правильно называть)
                                     newItem.timeCreate = Date()
                                     newItem.name = task.todo
                                     newItem.overview = task.todo
                                     newItem.completed = task.completed
                                 }
                                 
-                                // Сохранение контекста вне цикла, после завершения всех операций
+                                // Сохраняем контекст
                                 do {
-                                    try viewContext.save()
+                                    try self?.viewContext.save()
                                 } catch {
                                     let nsError = error as NSError
                                     fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
                                 }
                             }
                         }
-                        
                     }
-                }
-            }.resume()
+                }.resume()
+            }
         }
     }
-
     
+    // Функция, которая проверяет является ли текущий запуск первым
     private func checkFirstLaunch() {
-        let userDefaults = UserDefaults.standard
-        
-        // Проверяем, есть ли запись о том, что приложение уже запускалось
-        if !userDefaults.bool(forKey: "hasLaunchedBefore") {
-            // Если нет, значит это первый запуск
-            isFirstLaunch = true
+        // Переходим в асинхронную очередь с качеством .utility
+        DispatchQueue.global(qos: .utility).async {
+            let userDefaults = UserDefaults.standard
             
-            // Сохраняем, что приложение было запущено
-            userDefaults.set(true, forKey: "hasLaunchedBefore")
+            // Проверяем, есть ли запись о том, что приложение уже запускалось
+            if !userDefaults.bool(forKey: "hasLaunchedBefore") {
+                // Если нет, значит это первый запуск
+                self.isFirstLaunch = true
+                
+                // Сохраняем, что приложение было запущено
+                userDefaults.set(true, forKey: "hasLaunchedBefore")
+            }
         }
     }
     

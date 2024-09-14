@@ -44,12 +44,16 @@ struct EditTask: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    item.name = self.name
-                    item.overview = self.overview
-                    do {
-                        try viewContext.save()
-                    } catch {
-                        print("obshibka v EDIT TASK NA MOMENT SOXRANENIYA")
+                    DispatchQueue.global(qos: .utility).async {
+                        item.name = self.name
+                        item.overview = self.overview
+                        DispatchQueue.main.async {
+                            do {
+                                try viewContext.save()
+                            } catch {
+                                print("obshibka v EDIT TASK NA MOMENT SOXRANENIYA")
+                            }
+                        }
                     }
                 } label: {
                     Text("Save")
